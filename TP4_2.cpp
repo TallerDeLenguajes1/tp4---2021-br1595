@@ -173,6 +173,7 @@ Tarea *BusquedaPorId(tarea ** lista, int cantidad)
         }
     }
     printf("No se encontraron resultados.\n");
+	return NULL;
 }
 
 Tarea * BuscarPorPalabra(Tarea ** lista, int cantidad)
@@ -184,7 +185,7 @@ Tarea * BuscarPorPalabra(Tarea ** lista, int cantidad)
     if(id > cantidad || id < 0)
 	{
         printf("El ID ingresado no pertenece a ninguna tarea");
-        BuscarTarea(lista, cantidad);
+        BuscarPorPalabra(lista, cantidad);
     }
 	else
 	{
