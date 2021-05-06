@@ -15,7 +15,7 @@ struct tarea
 int CantidadTareas();
 void CargarTarea(Tarea **, int);
 void TestTareaCompletada(Tarea **, Tarea **, int);
-void MostrarTareas(Tarea **, int);
+void MostrarTareas(Tarea *);
 
 
 
@@ -33,10 +33,23 @@ int main()
 	CargarTarea(TareasPendientes, cantidad);
 	/*cantidad2 = */TestTareaCompletada(TareasPendientes, TareasRealizadas, cantidad);
 	
-	printf("\nTareas pendientes:\n");
-	MostrarTareas(TareasPendientes, cantidad);
-	printf("\nTareas realizadas:\n");
-	MostrarTareas(TareasRealizadas, /*cantidad2*/ cantidad);
+	printf("\nTareas pendientes:\n\n");
+	for(int i=0; i < cantidad; i++)
+	{	
+		if(*(TareasPendientes + i) != NULL)
+		{	
+			MostrarTareas(*(TareasPendientes + i));
+		}
+	}
+	
+	printf("\nTareas realizadas:\n\n");	
+	for(int i=0; i < cantidad; i++)
+	{	
+		if(*(TareasRealizadas + i) != NULL)
+		{			
+			MostrarTareas(*(TareasRealizadas + i));
+		}
+	}
 
     return 0;
 }
@@ -119,16 +132,10 @@ void TestTareaCompletada(Tarea ** lista, Tarea ** completo, int cantidad)
 	/*return tamano2;*/
 }
 
-void MostrarTareas(Tarea ** lista, int cantidad)
+void MostrarTareas(Tarea * lista)
 {
-	for(int i=0; i < cantidad; i++)
-	{	
-		if(lista[i] != NULL)
-		{
-			printf("Tarea %d", lista[i]->TareaID);		
-			printf("\nDescripción: %s", lista[i]->Descripcion);
-			printf("\nDuración: %d\n\n", lista[i]->Duracion);
-		}
-	}
+	printf("Tarea %d", lista->TareaID);		
+	printf("\nDescripción: %s", lista->Descripcion);
+	printf("\nDuración: %d\n\n", lista->Duracion);
 }
 
