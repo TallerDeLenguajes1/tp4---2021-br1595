@@ -16,7 +16,8 @@ int CantidadTareas();
 void CargarTarea(Tarea **, int);
 void TestTareaCompletada(Tarea **, Tarea **, int);
 void MostrarTareas(Tarea *);
-Tarea *BuscarTarea(tarea **, int);
+Tarea *BuscarPorPalabra(tarea **, int);
+Tarea * BusquedaPorId(Tarea **, int);
 
 
 
@@ -24,17 +25,22 @@ int main()
 {
     srand(time(0));
 	Tarea ** TareasPendientes, ** TareasRealizadas, * TareaEncontrada;
-    int cantidad, cantidad2;
+    int cantidad/*, cantidad2*/;
 
 
 	cantidad = CantidadTareas();
 	TareasPendientes = (Tarea**) malloc(sizeof(Tarea*) * cantidad);
 	TareasRealizadas = (Tarea**) malloc(sizeof(Tarea*) * cantidad);
+	TareaEncontrada = (Tarea*) malloc(sizeof(Tarea*));
 
 	CargarTarea(TareasPendientes, cantidad);
 
-	TareaEncontrada = BuscarTarea(TareasPendientes, cantidad);
+	TareaEncontrada = BuscarPorPalabra(TareasPendientes, cantidad);
 	MostrarTareas(TareaEncontrada);
+	
+	TareaEncontrada = BusquedaPorId(TareasPendientes, cantidad);
+	MostrarTareas(TareaEncontrada);
+
 	/*cantidad2 = */TestTareaCompletada(TareasPendientes, TareasRealizadas, cantidad);
 	
 	printf("\nTareas pendientes:\n\n");
@@ -143,7 +149,7 @@ void MostrarTareas(Tarea * lista)
 	printf("\nDuración: %d\n\n", lista->Duracion);
 }
 
-Tarea *BuscarTarea(tarea ** lista, int cantidad)
+Tarea *BusquedaPorId(tarea ** lista, int cantidad)
 {
     char PalabraABuscar[30];
     char *Palabra;
@@ -167,4 +173,23 @@ Tarea *BuscarTarea(tarea ** lista, int cantidad)
         }
     }
     printf("No se encontraron resultados.\n");
+}
+
+Tarea * BuscarPorPalabra(Tarea ** lista, int cantidad)
+{
+    int id;
+    printf("\nIngrese el ID de la tarea que desea buscar (entre 1 y %d): ", cantidad);
+    scanf("%d", &id);
+
+    if(id > cantidad || id < 0)
+	{
+        printf("El ID ingresado no pertenece a ninguna tarea");
+        BuscarTarea(lista, cantidad);
+    }
+	else
+	{
+		printf("\nTarea encontrada: \n");
+		//MostrarTareas(*(lista + id));
+    }
+	return *(lista + (id - 1));
 }
