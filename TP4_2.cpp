@@ -16,13 +16,14 @@ int CantidadTareas();
 void CargarTarea(Tarea **, int);
 void TestTareaCompletada(Tarea **, Tarea **, int);
 void MostrarTareas(Tarea *);
+Tarea *BuscarTarea(tarea **, int);
 
 
 
 int main()
 {
     srand(time(0));
-	Tarea ** TareasPendientes, ** TareasRealizadas;
+	Tarea ** TareasPendientes, ** TareasRealizadas, * TareaEncontrada;
     int cantidad, cantidad2;
 
 
@@ -31,6 +32,9 @@ int main()
 	TareasRealizadas = (Tarea**) malloc(sizeof(Tarea*) * cantidad);
 
 	CargarTarea(TareasPendientes, cantidad);
+
+	TareaEncontrada = BuscarTarea(TareasPendientes, cantidad);
+	MostrarTareas(TareaEncontrada);
 	/*cantidad2 = */TestTareaCompletada(TareasPendientes, TareasRealizadas, cantidad);
 	
 	printf("\nTareas pendientes:\n\n");
@@ -139,3 +143,28 @@ void MostrarTareas(Tarea * lista)
 	printf("\nDuración: %d\n\n", lista->Duracion);
 }
 
+Tarea *BuscarTarea(tarea ** lista, int cantidad)
+{
+    char PalabraABuscar[30];
+    char *Palabra;
+    int Resultado = 0;
+
+    printf("\nIngrese una palabra para buscar en tarea: ");
+    fflush(stdin);
+	gets(PalabraABuscar);
+	fflush(stdin);
+
+    printf("\nBuscando tarea..\n");
+    for (int i = 0; i < cantidad; i ++)
+	{
+       
+        Palabra = strstr((*(lista + i))->Descripcion, PalabraABuscar);
+
+        if(Palabra != NULL)
+		{
+            //MostrarTareas((*(lista + i)));
+			return *(lista + i);
+        }
+    }
+    printf("No se encontraron resultados.\n");
+}
